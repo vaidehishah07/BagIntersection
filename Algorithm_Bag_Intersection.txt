@@ -1,0 +1,43 @@
+NOTE - EVERYTHING SHOULD BE A BLOCK STRUCTURE AT STARTING. i.e. ArrayList<ArrayList<List<Integer>>> or something like that
+
+BlocksOfS  : S1,S2,S3
+S1 : (1,2),(1,2)
+S2 : (2,3),(4,5)
+S3:  (4,5),(7,8)
+
+
+MemoryOfS = HashMap which will have occurrences of distinct tuple 
+
+
+BlockOfR : R1,R2,R3,R4
+R1 : (1,2),(2,3)
+R2 : (2,3),(5,6)
+R3 : (4,5),(4,5)
+R4 : (1,2),(2,3)
+
+MemoryOfR : Each block of R is copies Block by Block and Follows the Algorithm Step 2
+
+OutputBufferBlock : O1 : ((1,2), (2,3)) - now transfer the O1 to Disk which is just a normal ArrayList and O1.clear(). 
+      Then add next 2 tuples ((4,5),(4,5)). 
+
+
+Disk : disk= (1,2),(2,3),(4,5),(4,5)
+
+Algorithm : 
+
+STEP 1 : 
+for each (BlockOfS) { 
+load that block (i.e- the loop should be first for S1 then S2 and then S3 respectively) in MemoryOfS and 
+  find the occurance of each tuple and store it in HashMap 
+}
+
+STEP 2 :
+for each (BlockOfR) { load that R into MemoryOfR (Memory of R can be Same data structure as R). 
+                       After loading the first block in memory, 
+                        {  
+                      compare each tuple with the HashMap(HashMap contains the key) then
+                                                 If count> 0 then, 
+					           decrement the count and store that tuple in outputBufferBlock O1. 
+                        }
+STEP 3 : 
+ If the size of OutputBuffer O1 is 2 (which means there are 2 tuples stored in OutputBuffer O1, then Copy the Block O1 to Disk and empty the OutputBuffer O1. 
